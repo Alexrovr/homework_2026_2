@@ -42,4 +42,12 @@ QUnit.module("Тестируем функцию partition", function() {
             ]
         ]);
     });
+
+    QUnit.test('Возвращает два пустых массива для пустого входного массива', function (assert) {
+        assert.deepEqual(partition([], (n) => n > 0), [[], []], 'partition([], predicate) === [[], []]');
+    });
+
+    QUnit.test('Работает правильно, когда предикат возвращает false для всех элементов', function (assert) {
+        assert.deepEqual(partition([1, 2, 3], () => false), [[], [1, 2, 3]], 'все элементы попадают во второй массив');
+    });
 });
