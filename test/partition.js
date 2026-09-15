@@ -50,4 +50,38 @@ QUnit.module("Тестируем функцию partition", function() {
     QUnit.test('Работает правильно, когда предикат возвращает false для всех элементов', function (assert) {
         assert.deepEqual(partition([1, 2, 3], () => false), [[], [1, 2, 3]], 'все элементы попадают во второй массив');
     });
+
+    QUnit.test('Выбрасывает ошибку, если первый аргумент не массив', function (assert) {
+        assert.throws(
+            () => partition(null, (n) => n > 0),
+            TypeError,
+            'partition(null, predicate) выбрасывает TypeError'
+        );
+
+        assert.throws(
+            () => partition(undefined, (n) => n > 0),
+            TypeError,
+            'partition(undefined, predicate) выбрасывает TypeError'
+        );
+
+        assert.throws(
+            () => partition('строка', (n) => n > 0),
+            TypeError,
+            'partition("строка", predicate) выбрасывает TypeError'
+        );
+    });
+
+    QUnit.test('Выбрасывает ошибку, если второй аргумент не функция', function (assert) {
+        assert.throws(
+            () => partition([1, 2, 3], null),
+            TypeError,
+            'partition(array, null) выбрасывает TypeError'
+        );
+
+        assert.throws(
+            () => partition([1, 2, 3], 'не функция'),
+            TypeError,
+            'partition(array, "строка") выбрасывает TypeError'
+        );
+    });
 });
